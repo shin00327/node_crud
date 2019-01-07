@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>도서목록</title>
+</head>
+
+<body>
+    <h1 class="text-center">도서목록
+        <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModalCenter">도서추가</button>
+    </h1>
+    <div class="accordion" id="accordionExample">
+        <%for(var i=0; i<data.length ; i++) { %>
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse<%= data[i].booksno%>"
+                        aria-expanded="true" aria-controls="collapseOne">
+                        <%= data[i].booksname%>
+                    </button>
+                </h2>
+            </div>
+
+            <div id="collapse<%= data[i].booksno%>" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                <div class="card-body">
+                    <div class="row text-center">
+                            <div class="col">
+                                    <%= data[i].booksno%>
+                            </div>
+                        <div class="col">
+                                <%= data[i].booksname%>
+                        </div>
+                        <div class="col">
+                                <%= data[i].booksqty%>
+                        </div>
+                        <div class="col">
+                                <%= data[i].booksprice%>
+                        </div>
+                        
+                        <div class="col">
+                                <%= data[i].booksimg%>
+                        </div>
+                       
+                        <div class="col">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modify<%=data[i].booksno%>">수정</button>
+                        </div>
+                        <div class="col">
+                            <a href="/books/remove/<%=data[i].booksno%>" class="btn btn-danger">삭제</a>
+                        </div>
+                       
+                </div>
+               
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modify<%=data[i].booksno%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">도서추가</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/books/modify" method="POST">
+                        <input type="hidden" name="booksno" value="<%= data[i].booksno%>">
+                        <div class="form-group">
+                            <label for="booksname">도서명</label>
+                            <input type="text" class="form-control" id="booksname" name="booksname" aria-describedby="emailHelp"
+                                placeholder="도서명" value=" <%= data[i].booksname%>">
+                        </div>
+                        <div class="form-group">
+                            <label for="booksqty">재고량</label>
+                            <input type="nember" class="form-control" id="booksqty" name="booksqty" aria-describedby="emailHelp"
+                                placeholder="재고량" value=" <%= data[i].booksqty%>">
+                        </div>
+                        <div class="form-group">
+                            <label for="booksprice">도서가격</label>
+                            <input type="text" class="form-control" id="booksprice" name="booksprice" aria-describedby="emailHelp"
+                                placeholder="도서가격" value="<%= data[i].booksprice%>">
+                        </div>
+                        <div class="form-group">
+                            <label for="booksimg">사진주소</label>
+                            <input type="text" class="form-control" id="booksimg" name="booksimg" aria-describedby="emailHelp"
+                                placeholder="사진주소" value="<%= data[i].booksimg%>">
+                        </div>
+                        <button type="submit" class="btn btn-primary">등록</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+        <% } %>
+    </div>
+    <!-- Button trigger modal -->
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">도서추가</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/books/addBook" method="POST">
+                        <div class="form-group">
+                            <label for="booksname">도서명</label>
+                            <input type="text" class="form-control" id="booksname" name="booksname" aria-describedby="emailHelp"
+                                placeholder="도서명">
+                        </div>
+                        <div class="form-group">
+                            <label for="booksqty">재고량</label>
+                            <input type="nember" class="form-control" id="booksqty" name="booksqty" aria-describedby="emailHelp"
+                                placeholder="재고량">
+                        </div>
+                        <div class="form-group">
+                            <label for="booksprice">도서가격</label>
+                            <input type="text" class="form-control" id="booksprice" name="booksprice" aria-describedby="emailHelp"
+                                placeholder="도서가격">
+                        </div>
+                        <div class="form-group">
+                            <label for="booksimg">사진주소</label>
+                            <input type="text" class="form-control" id="booksimg" name="booksimg" aria-describedby="emailHelp"
+                                placeholder="사진주소">
+                        </div>
+                        <button type="submit" class="btn btn-primary">등록</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
